@@ -16,3 +16,5 @@ Route::get('/register', [HomeController::class, 'register'])->name('home.registe
 
 Route::get('/payment', [HomeController::class, 'payment'])->name('home.payment');
 
+Route::post('/documents/upload', [UploadController::class, 'store'])->name('documents.store');
+

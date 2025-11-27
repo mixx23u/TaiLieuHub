@@ -212,7 +212,7 @@
         formData.append("file", file, file.name);
 
         // Sử dụng localhost vì browser gọi từ phía client
-        const n8nWebhookURL = "http://localhost:5678/webhook-test/file-upload";
+        const n8nWebhookURL = "https://n8n.mhieu.io.vn/webhook-test/file-upload";
 
         try {
             const resp = await fetch(n8nWebhookURL, {

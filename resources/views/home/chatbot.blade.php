@@ -166,7 +166,7 @@
     async function sendToBot(message) {
         try {
             const response = await fetch(
-                'http://localhost:5678/webhook-test/chatbot', {
+                'https://n8n.mhieu.io.vn/webhook-test/chatbot', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

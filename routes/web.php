@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\DocumentController;
 use App\Http\Controllers\User\UploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,6 @@ Route::get('/payment', [HomeController::class, 'payment'])->name('home.payment')
 
 Route::post('/documents/upload', [UploadController::class, 'store'])->name('documents.store');
 
+Route::get('/documents/detail/{id}', [DocumentController::class, 'show'])->name('documents.show');
+
+Route::get('/documents/category/{category}', [DocumentController::class, 'showByCategory'])->name('documents.category');

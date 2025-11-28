@@ -11,9 +11,9 @@
     <header class="bg-black text-white">
         <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold">
-                <a href="index.html">TaiLieuHub</a>
+                <a href="{{ route('home.index') }}">TaiLieuHub</a>
             </div>
-            <a href="index.html" class="hover:text-gray-300">← Quay lại</a>
+            <a href="{{ route('home.index') }}" class="hover:text-gray-300">← Quay lại</a>
         </nav>
     </header>
 
@@ -68,7 +68,7 @@
                 </form>
 
                 <div class="mt-6 text-center">
-                    <p class="text-sm">Đã có tài khoản? <a href="login.html" class="font-bold hover:underline">Đăng nhập</a></p>
+                    <p class="text-sm">Đã có tài khoản? <a href="{{ route('home.login') }}" class="font-bold hover:underline">Đăng nhập</a></p>
                 </div>
             </div>
         </div>

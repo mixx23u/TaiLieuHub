@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class UploadController extends Controller
 {
@@ -39,6 +41,15 @@ class UploadController extends Controller
         }
 
         Document::create($data);
+
+        // Gửi request tới n8n để cập nhật Data Table
+        try {
+            Http::timeout(5)->post('https://n8n.mhieu.io.vn/webhook/sync-documents', [
+                'action' => 'create',
+            ]);
+        } catch (\Exception $e) {
+            Log::warning('Failed to sync document to n8n: ' . $e->getMessage());
+        }
 
         return redirect()->route('home.index')->with('success', 'Tài liệu đã được tải lên thành công!');
     }

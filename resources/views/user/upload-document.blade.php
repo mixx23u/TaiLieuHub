@@ -262,7 +262,6 @@
                         descriptionField.classList.remove('bg-yellow-100');
                     }, 2000);
                 }
-
                 // Ẩn loading popup
                 loadingPopup.classList.add('hidden');
 
@@ -281,3 +280,5 @@
         }
     }
 </script>
+
+

@@ -3,18 +3,43 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index() 
+    public function index()
     {
-        return view('home.index');
+        // List of categories
+        $categories = [
+            'lap-trinh', 'thiet-ke', 'marketing', 'kinh-te',
+            'khoa-hoc', 'lich-su', 'van-hoc', 'suc-khoe'
+        ];
+
+        // Count documents per category
+        $counts = [];
+        foreach ($categories as $cat) {
+            $counts[$cat] = Document::where('category', $cat)->count(); // Count each category
+        }
+
+        return view('home.index', compact('counts'));
     }
 
     public function explore()
     {
-        return view('home.explore');
+        // List of categories
+        $categories = [
+            'lap-trinh', 'thiet-ke', 'marketing', 'kinh-te',
+            'khoa-hoc', 'lich-su', 'van-hoc', 'suc-khoe'
+        ];
+
+        // Count documents per category
+        $counts = [];
+        foreach ($categories as $cat) {
+            $counts[$cat] = Document::where('category', $cat)->count(); // Count each category
+        }
+
+        return view('home.explore', compact('counts'));
     }
 
     

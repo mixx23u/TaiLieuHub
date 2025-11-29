@@ -20,11 +20,11 @@
     <header class="bg-black text-white">
         <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold">
-                <a href="index.html">TaiLieuHub</a>
+                <a href="{{ route('home.index') }}">TaiLieuHub</a>
             </div>
             <div class="flex gap-6 items-center">
-                <a href="explore.html" class="hover:text-gray-300">Khám phá</a>
-                <a href="login.html" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
+                <a href="{{ route('home.explore') }}" class="hover:text-gray-300">Khám phá</a>
+                <a href="{{ route('home.index') }}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
             </div>
         </nav>
     </header>
@@ -32,7 +32,7 @@
     <!-- Upload Form -->
     <section class="py-12 px-6 max-w-3xl mx-auto">
         <div class="mb-8">
-            <a href="index.html" class="font-semibold hover:underline">← Quay lại</a>
+            <a href="{{ route('home.index') }}" class="font-semibold hover:underline">← Quay lại</a>
             <h1 class="text-4xl font-bold mt-4">Tải Lên Tài Liệu Của Bạn</h1>
             <p class="text-gray-600 mt-2">Chia sẻ kiến thức của bạn với cộng đồng</p>
         </div>
@@ -138,7 +138,7 @@
                 <button type="submit"  class="flex-1 py-3 bg-black text-white font-bold rounded hover:bg-gray-800 transition">
                     Tải Lên Tài Liệu
                 </button>
-                <a href="index.html" class="flex-1 py-3 border-2 border-black font-bold rounded text-center hover:bg-black hover:text-white transition">
+                <a href="{{ route('home.index') }}" class="flex-1 py-3 border-2 border-black font-bold rounded text-center hover:bg-black hover:text-white transition">
                     Hủy
                 </a>
             </div>

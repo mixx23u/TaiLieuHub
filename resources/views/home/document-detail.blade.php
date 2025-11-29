@@ -11,51 +11,45 @@
     <header class="bg-black text-white">
         <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold">
-                <a href="{{ route(home.index) }}">TaiLieuHub</a>
+                <a href="{{ route('home.index') }}">TaiLieuHub</a>
             </div>
             <div class="flex gap-6 items-center">
-                <a href="explore.html" class="hover:text-gray-300">Khám phá</a>
-                <a href="login.html" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
+                <a href="{{ route('home.explore') }}" class="hover:text-gray-300">Khám phá</a>
+                <a href="{{ route('home.login') }}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
             </div>
         </nav>
     </header>
 
     <!-- Document Details -->
     <section class="py-12 px-6 max-w-6xl mx-auto">
-        <a href="topic-documents.html?topic=lap-trinh" class="font-semibold hover:underline">← Quay lại</a>
+        <a href="{{ "documents.show" }}" class="font-semibold hover:underline">← Quay lại</a>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
             <!-- Main Content -->
             <div class="lg:col-span-2">
                 <!-- Document Preview -->
-                <div class="border-2 border-black rounded mb-8 p-8 bg-gray-100 min-h-96 flex items-center justify-center">
-                    <div class="text-center">
-                        <div class="text-6xl font-bold mb-4">📄</div>
-                        <p class="text-lg font-semibold">Hướng Dẫn Python Cơ Bản</p>
-                        <p class="text-sm text-gray-600 mt-2">Xem trước tài liệu</p>
+                <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank">
+                    <div class="border-2 border-black rounded mb-8 p-8 bg-gray-100 min-h-96 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-6xl font-bold mb-4">📄</div>
+                            <p class="text-lg font-semibold">{{ $document->title }}</p>
+                            <p class="text-sm text-gray-600 mt-2">Xem trước tài liệu</p>
+                        </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Document Info -->
                 <div class="mb-8">
-                    <h1 class="text-4xl font-bold mb-4">Hướng Dẫn Python Cơ Bản</h1>
+                    <h1 class="text-4xl font-bold mb-4">{{ $document->title }}</h1>
                     
                     <div class="flex gap-6 mb-6 pb-6 border-b border-black">
                         <div>
                             <p class="text-sm text-gray-600">Tác giả</p>
-                            <p class="font-semibold">Nguyễn Văn A</p>
+                            <p class="font-semibold">{{ $document->user->name }}</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Ngày đăng</p>
-                            <p class="font-semibold">15/11/2024</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-600">Lượt xem</p>
-                            <p class="font-semibold">2,450</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-600">Xếp hạng</p>
-                            <p class="font-semibold">⭐ 4.5/5 (120 đánh giá)</p>
+                            <p class="font-semibold">{{ $document->created_at->format('d/m/Y') }}</p>
                         </div>
                     </div>
 
@@ -63,40 +57,21 @@
                     <div class="mb-8">
                         <h2 class="text-2xl font-bold mb-4">Mô tả</h2>
                         <p class="text-gray-700 leading-relaxed mb-4">
-                            Tài liệu này là hướng dẫn toàn diện về lập trình Python dành cho người mới bắt đầu. 
-                            Bao gồm các khái niệm cơ bản, cú pháp, và các ứng dụng thực tế.
-                        </p>
-                        <p class="text-gray-700 leading-relaxed">
-                            Nội dung được biên soạn bởi các chuyên gia lập trình có kinh nghiệm hơn 10 năm, 
-                            với ví dụ minh họa chi tiết và bài tập thực hành.
+                            {{ $document->description }}
                         </p>
                     </div>
 
-                    <!-- Content Details -->
+                    <!-- Extra Info -->
                     <div class="border-2 border-black rounded p-6 mb-8">
-                        <h3 class="text-xl font-bold mb-4">Nội Dung Tài Liệu</h3>
+                        <h3 class="text-xl font-bold mb-4">Thông tin thêm</h3>
                         <ul class="space-y-2 text-sm">
-                            <li class="flex items-center"><span class="mr-3">✓</span> 200+ trang nội dung</li>
-                            <li class="flex items-center"><span class="mr-3">✓</span> 50+ ví dụ mã nguồn</li>
-                            <li class="flex items-center"><span class="mr-3">✓</span> 20+ bài tập thực hành</li>
-                            <li class="flex items-center"><span class="mr-3">✓</span> Hỗ trợ PDF và ePub</li>
-                            <li class="flex items-center"><span class="mr-3">✓</span> Cập nhật miễn phí</li>
+                            <li class="flex items-center">
+                                <span class="mr-3">✓</span>
+                                Định dạng: {{ strtoupper(pathinfo($document->file_path, PATHINFO_EXTENSION)) }}
+                            </li>
+                            <li class="flex items-center"><span class="mr-3">✓</span> Người đăng: {{ $document->user->name }}</li>
+                            <li class="flex items-center"><span class="mr-3">✓</span> Đường dẫn file: Truy cập file tại <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" style="color: blue;">&nbsp; đây</a></li>
                         </ul>
-                    </div>
-
-                    <!-- Reviews -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">Nhận Xét Của Người Dùng</h3>
-                        <div class="space-y-4">
-                            <div class="border-l-4 border-black pl-4">
-                                <p class="font-semibold">⭐⭐⭐⭐⭐ Tuyệt vời! - Lý Văn B</p>
-                                <p class="text-sm text-gray-600 mt-2">Tài liệu rất chi tiết và dễ hiểu. Tôi đã học được rất nhiều từ đây.</p>
-                            </div>
-                            <div class="border-l-4 border-black pl-4">
-                                <p class="font-semibold">⭐⭐⭐⭐ Rất tốt - Trần Thị C</p>
-                                <p class="text-sm text-gray-600 mt-2">Nội dung tốt nhưng muốn có thêm ví dụ về ứng dụng thực tế.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -134,16 +109,12 @@
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Định dạng:</span>
-                            <span class="font-semibold">PDF</span>
+                            <span class="font-semibold">{{ strtoupper(pathinfo($document->file_path, PATHINFO_EXTENSION)) }}</span>
                         </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600">Trang:</span>
-                            <span class="font-semibold">256</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
+                        {{-- <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Ngôn ngữ:</span>
                             <span class="font-semibold">Tiếng Việt</span>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- Contact Author -->

@@ -11,11 +11,11 @@
     <header class="bg-black text-white">
         <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold">
-                <a href="index.html">TaiLieuHub</a>
+                <a href="{{ route('home.index') }}">TaiLieuHub</a>
             </div>
             <div class="flex gap-6 items-center">
-                <a href="explore.html" class="hover:text-gray-300">Khám phá</a>
-                <a href="login.html" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
+                <a href="{{ route('home.explore') }}" class="hover:text-gray-300">Khám phá</a>
+                <a href="{{ route('home.login') }}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
             </div>
         </nav>
     </header>
@@ -145,7 +145,7 @@
                         </button>
                     </form>
 
-                    <a href="index.html" class="block text-center py-2 border-2 border-black rounded font-semibold hover:bg-black hover:text-white transition">
+                    <a href="{{ route('home.index') }}" class="block text-center py-2 border-2 border-black rounded font-semibold hover:bg-black hover:text-white transition">
                         Quay Lại
                     </a>
                 </div>

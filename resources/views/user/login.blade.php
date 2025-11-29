@@ -11,9 +11,9 @@
     <header class="bg-black text-white">
         <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold">
-                <a href="index.html">TaiLieuHub</a>
+                <a href="{{ route('home.index') }}">TaiLieuHub</a>
             </div>
-            <a href="index.html" class="hover:text-gray-300">← Quay lại</a>
+            <a href="{{ route('home.index') }}" class="hover:text-gray-300">← Quay lại</a>
         </nav>
     </header>
 
@@ -48,7 +48,7 @@
 
                 <div class="mt-6 text-center">
                     <p class="text-sm mb-4">Quên mật khẩu? <a href="#" class="font-bold hover:underline">Đặt lại</a></p>
-                    <p class="text-sm">Chưa có tài khoản? <a href="register.html" class="font-bold hover:underline">Đăng ký ngay</a></p>
+                    <p class="text-sm">Chưa có tài khoản? <a href="{{ route('home.register') }}" class="font-bold hover:underline">Đăng ký ngay</a></p>
                 </div>
             </div>
         </div>

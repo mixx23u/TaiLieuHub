@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,29 @@
             </div>
             <div class="flex gap-6 items-center">
                 <a href="{{ route('home.explore') }}" class="hover:text-gray-300">Khám phá</a>
-                <a href="{{ route('home.index') }}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
+                @if (auth()->check())
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('home.upload-document') }}" class="text-sm hover:text-gray-300">Tải lên</a>
+                        <div class="flex items-center gap-3">
+                            <img src="{{ auth()->user()->avatar ?? 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=40&d=identicon' }}"
+                                alt="avatar" class="w-8 h-8 rounded-full">
+                            <div class="text-sm text-white">
+                                <div class="font-semibold">{{ auth()->user()->name }}</div>
+                                <form action="{{ route('web.logout') }}" method="POST" class="mt-0">
+                                    @csrf
+                                    <button type="submit" class="text-xs hover:underline">Đăng xuất</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('home.login') }}"
+                        class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng
+                        nhập</a>
+                    <a href="{{ route('home.register') }}"
+                        class="px-4 py-2 bg-white text-black rounded font-semibold hover:bg-gray-200 transition">Đăng
+                        ký</a>
+                @endif
             </div>
         </nav>
     </header>
@@ -42,8 +65,7 @@
             <!-- Document Title -->
             <div>
                 <label class="block font-semibold mb-2">Tiêu Đề Tài Liệu *</label>
-                <input type="text" name="title" required 
-                    placeholder="Nhập tiêu đề tài liệu của bạn"
+                <input type="text" name="title" required placeholder="Nhập tiêu đề tài liệu của bạn"
                     class="w-full px-4 py-3 border-2 border-black rounded focus:outline-none focus:bg-black focus:text-white transition">
             </div>
 
@@ -135,10 +157,12 @@
 
             <!-- Buttons -->
             <div class="flex gap-4">
-                <button type="submit"  class="flex-1 py-3 bg-black text-white font-bold rounded hover:bg-gray-800 transition">
+                <button type="submit"
+                    class="flex-1 py-3 bg-black text-white font-bold rounded hover:bg-gray-800 transition">
                     Tải Lên Tài Liệu
                 </button>
-                <a href="{{ route('home.index') }}" class="flex-1 py-3 border-2 border-black font-bold rounded text-center hover:bg-black hover:text-white transition">
+                <a href="{{ route('home.index') }}"
+                    class="flex-1 py-3 border-2 border-black font-bold rounded text-center hover:bg-black hover:text-white transition">
                     Hủy
                 </a>
             </div>
@@ -149,7 +173,7 @@
         // Show/hide price field based on price type
         document.querySelectorAll('input[name="price_type"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
-                document.getElementById('price-field').style.display = 
+                document.getElementById('price-field').style.display =
                     e.target.value === 'paid' ? 'block' : 'none';
             });
         });
@@ -157,7 +181,7 @@
         // Update file name display
         function updateFileName(input) {
             const fileName = input.files[0] ? input.files[0].name : '';
-            document.getElementById('file-name').textContent = 
+            document.getElementById('file-name').textContent =
                 fileName ? `Đã chọn: ${fileName}` : '';
         }
     </script>
@@ -254,9 +278,9 @@
                     console.log("✓ Đã set category:", result.category.label);
                 }
 
-                // Set description
-                if (result.description) {
-                    descriptionField.value = result.description;
+                // Set description (dùng reasoning thay vì description)
+                if (result.reasoning) {
+                    descriptionField.value = result.reasoning;
                     descriptionField.classList.add('bg-yellow-100');
                     setTimeout(() => {
                         descriptionField.classList.remove('bg-yellow-100');
@@ -280,5 +304,3 @@
         }
     }
 </script>
-
-

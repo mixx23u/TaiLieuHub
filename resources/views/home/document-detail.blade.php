@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi Tiết Tài Liệu - TaiLieuHub</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-white">
     <!-- Header -->
     <header class="bg-black text-white">
@@ -15,21 +17,44 @@
             </div>
             <div class="flex gap-6 items-center">
                 <a href="{{ route('home.explore') }}" class="hover:text-gray-300">Khám phá</a>
-                <a href="{{ route('home.login') }}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
+                @if (auth()->check())
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('home.upload-document') }}" class="text-sm hover:text-gray-300">Tải lên</a>
+                        <div class="flex items-center gap-3">
+                            <img src="{{ auth()->user()->avatar ?? 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=40&d=identicon' }}"
+                                alt="avatar" class="w-8 h-8 rounded-full">
+                            <div class="text-sm text-white">
+                                <div class="font-semibold">{{ auth()->user()->name }}</div>
+                                <form action="{{ route('web.logout') }}" method="POST" class="mt-0">
+                                    @csrf
+                                    <button type="submit" class="text-xs hover:underline">Đăng xuất</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('home.login') }}"
+                        class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng
+                        nhập</a>
+                    <a href="{{ route('home.register') }}"
+                        class="px-4 py-2 bg-white text-black rounded font-semibold hover:bg-gray-200 transition">Đăng
+                        ký</a>
+                @endif
             </div>
         </nav>
     </header>
 
     <!-- Document Details -->
     <section class="py-12 px-6 max-w-6xl mx-auto">
-        <a href="{{ "documents.show" }}" class="font-semibold hover:underline">← Quay lại</a>
+        <a href="{{ 'documents.show' }}" class="font-semibold hover:underline">← Quay lại</a>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
             <!-- Main Content -->
             <div class="lg:col-span-2">
                 <!-- Document Preview -->
                 <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank">
-                    <div class="border-2 border-black rounded mb-8 p-8 bg-gray-100 min-h-96 flex items-center justify-center">
+                    <div
+                        class="border-2 border-black rounded mb-8 p-8 bg-gray-100 min-h-96 flex items-center justify-center">
                         <div class="text-center">
                             <div class="text-6xl font-bold mb-4">📄</div>
                             <p class="text-lg font-semibold">{{ $document->title }}</p>
@@ -41,7 +66,7 @@
                 <!-- Document Info -->
                 <div class="mb-8">
                     <h1 class="text-4xl font-bold mb-4">{{ $document->title }}</h1>
-                    
+
                     <div class="flex gap-6 mb-6 pb-6 border-b border-black">
                         <div>
                             <p class="text-sm text-gray-600">Tác giả</p>
@@ -69,8 +94,11 @@
                                 <span class="mr-3">✓</span>
                                 Định dạng: {{ strtoupper(pathinfo($document->file_path, PATHINFO_EXTENSION)) }}
                             </li>
-                            <li class="flex items-center"><span class="mr-3">✓</span> Người đăng: {{ $document->user->name }}</li>
-                            <li class="flex items-center"><span class="mr-3">✓</span> Đường dẫn file: Truy cập file tại <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" style="color: blue;">&nbsp; đây</a></li>
+                            <li class="flex items-center"><span class="mr-3">✓</span> Người đăng:
+                                {{ $document->user->name }}</li>
+                            <li class="flex items-center"><span class="mr-3">✓</span> Đường dẫn file: Truy cập file
+                                tại <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank"
+                                    style="color: blue;">&nbsp; đây</a></li>
                         </ul>
                     </div>
                 </div>
@@ -88,7 +116,9 @@
                     <div id="payment-section" class="mb-6 p-4 border-2 border-black rounded bg-gray-50">
                         <p class="text-sm font-semibold mb-3">Hỗ trợ tác giả với thanh toán</p>
                         <div class="bg-white border-2 border-black p-4 flex justify-center mb-3">
-                            <div style="width: 150px; height: 150px; background: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22white%22 width=%22100%22 height=%22100%22/><rect fill=%22black%22 x=%225%22 y=%225%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%225%22 y=%2240%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%225%22 y=%2275%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2240%22 y=%225%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2275%22 y=%225%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2240%22 y=%2275%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2275%22 y=%2240%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2275%22 y=%2275%22 width=%2210%22 height=%2210%22/></svg>') center/contain no-repeat; width: 100%; height: 100%;"></div>
+                            <div
+                                style="width: 150px; height: 150px; background: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22white%22 width=%22100%22 height=%22100%22/><rect fill=%22black%22 x=%225%22 y=%225%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%225%22 y=%2240%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%225%22 y=%2275%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2240%22 y=%225%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2275%22 y=%225%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2240%22 y=%2275%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2275%22 y=%2240%22 width=%2210%22 height=%2210%22/><rect fill=%22black%22 x=%2275%22 y=%2275%22 width=%2210%22 height=%2210%22/></svg>') center/contain no-repeat; width: 100%; height: 100%;">
+                            </div>
                         </div>
                         <p class="text-xs text-center text-gray-600">Quét mã QR để thanh toán</p>
                     </div>
@@ -97,7 +127,8 @@
                         Tải Xuống Miễn Phí
                     </button>
 
-                    <button class="w-full py-3 border-2 border-black font-semibold rounded hover:bg-black hover:text-white transition mb-6">
+                    <button
+                        class="w-full py-3 border-2 border-black font-semibold rounded hover:bg-black hover:text-white transition mb-6">
                         Thêm vào yêu thích
                     </button>
 
@@ -109,7 +140,8 @@
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Định dạng:</span>
-                            <span class="font-semibold">{{ strtoupper(pathinfo($document->file_path, PATHINFO_EXTENSION)) }}</span>
+                            <span
+                                class="font-semibold">{{ strtoupper(pathinfo($document->file_path, PATHINFO_EXTENSION)) }}</span>
                         </div>
                         {{-- <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Ngôn ngữ:</span>
@@ -118,7 +150,8 @@
                     </div>
 
                     <!-- Contact Author -->
-                    <button class="w-full mt-6 py-2 border-2 border-black rounded text-sm hover:bg-black hover:text-white transition">
+                    <button
+                        class="w-full mt-6 py-2 border-2 border-black rounded text-sm hover:bg-black hover:text-white transition">
                         Liên hệ tác giả
                     </button>
                 </div>
@@ -133,4 +166,5 @@
         </div>
     </footer>
 </body>
+
 </html>

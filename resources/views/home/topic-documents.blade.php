@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tài Liệu - TaiLieuHub</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-white">
     <!-- Header -->
     <header class="bg-black text-white">
@@ -17,7 +19,29 @@
                 <a href="{{ route('home.explore') }}" class="hover:text-gray-300">Khám phá</a>
                 <a href="{{ route('home.upload-document') }}" class="hover:text-gray-300">Tải lên</a>
                 <a href="{{ route('home.payment') }}" class="hover:text-gray-300">Nạp tiền</a>
-                <a href="{{ route('home.login') }}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
+                @if (auth()->check())
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('home.upload-document') }}" class="text-sm hover:text-gray-300">Tải lên</a>
+                        <div class="flex items-center gap-3">
+                            <img src="{{ auth()->user()->avatar ?? 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=40&d=identicon' }}"
+                                alt="avatar" class="w-8 h-8 rounded-full">
+                            <div class="text-sm text-white">
+                                <div class="font-semibold">{{ auth()->user()->name }}</div>
+                                <form action="{{ route('web.logout') }}" method="POST" class="mt-0">
+                                    @csrf
+                                    <button type="submit" class="text-xs hover:underline">Đăng xuất</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('home.login') }}"
+                        class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng
+                        nhập</a>
+                    <a href="{{ route('home.register') }}"
+                        class="px-4 py-2 bg-white text-black rounded font-semibold hover:bg-gray-200 transition">Đăng
+                        ký</a>
+                @endif
             </div>
         </nav>
     </header>
@@ -28,34 +52,42 @@
             <a href="{{ route('home.explore') }}" class="font-semibold hover:underline">← Quay lại</a>
             <h1 class="text-4xl font-bold mt-4 mb-2">
                 <p style="text-transform: uppercase;">
-                @switch($category)
-                    @case("lap-trinh")
-                        Lập trình
+                    @switch($category)
+                        @case('lap-trinh')
+                            Lập trình
                         @break
-                    @case("thiet-ke")
-                        Thiết kế
+
+                        @case('thiet-ke')
+                            Thiết kế
                         @break
-                    @case("marketing")
-                        Marketing
+
+                        @case('marketing')
+                            Marketing
                         @break
-                    @case("kinh-te")
-                        Kinh tế
+
+                        @case('kinh-te')
+                            Kinh tế
                         @break
-                    @case("khoa-hoc")
-                        Khoa học
+
+                        @case('khoa-hoc')
+                            Khoa học
                         @break
-                    @case("lich-su")
-                        Lịch sử
+
+                        @case('lich-su')
+                            Lịch sử
                         @break
-                    @case("van-hoc")
-                        Văn học
+
+                        @case('van-hoc')
+                            Văn học
                         @break
-                    @case("suc-khoe")
-                        Sức khỏe
+
+                        @case('suc-khoe')
+                            Sức khỏe
                         @break
-                    @default
-                        Khác
-                @endswitch
+
+                        @default
+                            Khác
+                    @endswitch
                 </p>
             </h1>
             <p class="text-gray-600">
@@ -78,7 +110,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             @foreach ($documents as $doc)
                 <a href="{{ route('documents.show', $doc->id) }}"
-                class="border-2 border-black rounded overflow-hidden hover:shadow-lg transition">
+                    class="border-2 border-black rounded overflow-hidden hover:shadow-lg transition">
 
                     <div class="h-40 bg-gray-300 flex items-center justify-center">
                         <div class="text-center">
@@ -111,4 +143,5 @@
         </div>
     </footer>
 </body>
+
 </html>

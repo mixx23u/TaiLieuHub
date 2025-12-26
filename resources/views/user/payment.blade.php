@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nạp Tiền - TaiLieuHub</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-white">
     <!-- Header -->
     <header class="bg-black text-white">
@@ -15,7 +17,29 @@
             </div>
             <div class="flex gap-6 items-center">
                 <a href="{{ route('home.explore') }}" class="hover:text-gray-300">Khám phá</a>
-                <a href="{{ route('home.login') }}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng nhập</a>
+                @if (auth()->check())
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('home.upload-document') }}" class="text-sm hover:text-gray-300">Tải lên</a>
+                        <div class="flex items-center gap-3">
+                            <img src="{{ auth()->user()->avatar ?? 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=40&d=identicon' }}"
+                                alt="avatar" class="w-8 h-8 rounded-full">
+                            <div class="text-sm text-white">
+                                <div class="font-semibold">{{ auth()->user()->name }}</div>
+                                <form action="{{ route('web.logout') }}" method="POST" class="mt-0">
+                                    @csrf
+                                    <button type="submit" class="text-xs hover:underline">Đăng xuất</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('home.login') }}"
+                        class="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">Đăng
+                        nhập</a>
+                    <a href="{{ route('home.register') }}"
+                        class="px-4 py-2 bg-white text-black rounded font-semibold hover:bg-gray-200 transition">Đăng
+                        ký</a>
+                @endif
             </div>
         </nav>
     </header>
@@ -35,7 +59,8 @@
 
                     <!-- Payment Packages -->
                     <div class="space-y-4 mb-8">
-                        <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                        <label
+                            class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                             <input type="radio" name="package" value="50000" checked class="mr-4">
                             <div class="flex-1">
                                 <p class="font-bold">50.000 VNĐ</p>
@@ -44,7 +69,8 @@
                             <p class="font-bold">50.000đ</p>
                         </label>
 
-                        <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                        <label
+                            class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                             <input type="radio" name="package" value="100000" class="mr-4">
                             <div class="flex-1">
                                 <p class="font-bold">100.000 VNĐ</p>
@@ -53,7 +79,8 @@
                             <p class="font-bold">100.000đ</p>
                         </label>
 
-                        <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                        <label
+                            class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                             <input type="radio" name="package" value="250000" class="mr-4">
                             <div class="flex-1">
                                 <p class="font-bold">250.000 VNĐ</p>
@@ -62,7 +89,8 @@
                             <p class="font-bold">250.000đ</p>
                         </label>
 
-                        <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                        <label
+                            class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                             <input type="radio" name="package" value="500000" class="mr-4">
                             <div class="flex-1">
                                 <p class="font-bold">500.000 VNĐ</p>
@@ -71,7 +99,8 @@
                             <p class="font-bold">500.000đ</p>
                         </label>
 
-                        <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                        <label
+                            class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                             <input type="radio" name="package" value="custom" class="mr-4">
                             <div class="flex-1">
                                 <p class="font-bold">Tùy chỉnh</p>
@@ -91,10 +120,11 @@
                     <!-- Payment Method -->
                     <div class="mb-8">
                         <h3 class="text-xl font-bold mb-4">Chọn Phương Thức Thanh Toán</h3>
-                        
+
                         <div class="space-y-4">
                             <!-- Momo -->
-                            <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                            <label
+                                class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                                 <input type="radio" name="payment_method" value="momo" checked class="mr-4">
                                 <div class="flex-1">
                                     <p class="font-bold">MoMo</p>
@@ -104,7 +134,8 @@
                             </label>
 
                             <!-- Bank Transfer -->
-                            <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                            <label
+                                class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                                 <input type="radio" name="payment_method" value="bank" class="mr-4">
                                 <div class="flex-1">
                                     <p class="font-bold">Chuyển khoản Ngân Hàng</p>
@@ -114,7 +145,8 @@
                             </label>
 
                             <!-- Card -->
-                            <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                            <label
+                                class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                                 <input type="radio" name="payment_method" value="card" class="mr-4">
                                 <div class="flex-1">
                                     <p class="font-bold">Thẻ Tín Dụng / Ghi Nợ</p>
@@ -124,7 +156,8 @@
                             </label>
 
                             <!-- VNPAY -->
-                            <label class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
+                            <label
+                                class="flex items-center p-4 border-2 border-black rounded cursor-pointer hover:bg-gray-50 transition">
                                 <input type="radio" name="payment_method" value="vnpay" class="mr-4">
                                 <div class="flex-1">
                                     <p class="font-bold">VNPAY</p>
@@ -139,13 +172,15 @@
                     <form action="/api/payment/create" method="POST">
                         <input type="hidden" name="amount" id="amount-input" value="50000">
                         <input type="hidden" name="payment_method" id="method-input" value="momo">
-                        
-                        <button type="submit" class="w-full py-4 bg-black text-white font-bold text-lg rounded hover:bg-gray-800 transition mb-4">
+
+                        <button type="submit"
+                            class="w-full py-4 bg-black text-white font-bold text-lg rounded hover:bg-gray-800 transition mb-4">
                             Tiếp Tục Thanh Toán
                         </button>
                     </form>
 
-                    <a href="{{ route('home.index') }}" class="block text-center py-2 border-2 border-black rounded font-semibold hover:bg-black hover:text-white transition">
+                    <a href="{{ route('home.index') }}"
+                        class="block text-center py-2 border-2 border-black rounded font-semibold hover:bg-black hover:text-white transition">
                         Quay Lại
                     </a>
                 </div>
@@ -169,7 +204,7 @@
 
                     <div class="mt-6">
                         <p class="text-xs text-gray-600 mb-4">
-                            Sau khi thanh toán thành công, tiền sẽ được cộng vào ví ngay lập tức. 
+                            Sau khi thanh toán thành công, tiền sẽ được cộng vào ví ngay lập tức.
                             Bạn có thể sử dụng tiền để mua tài liệu hoặc hỗ trợ các tác giả.
                         </p>
                     </div>
@@ -177,7 +212,8 @@
                     <!-- Info Box -->
                     <div class="bg-gray-100 border-2 border-black rounded p-4 mt-6">
                         <p class="font-bold text-sm mb-2">💡 Mẹo</p>
-                        <p class="text-xs">Mua gói lớn hơn để tiết kiệm hơn. Tiền không sử dụng sẽ được giữ trong ví của bạn.</p>
+                        <p class="text-xs">Mua gói lớn hơn để tiết kiệm hơn. Tiền không sử dụng sẽ được giữ trong ví
+                            của bạn.</p>
                     </div>
                 </div>
             </div>
@@ -210,11 +246,14 @@
         function updateSummary() {
             const amount = document.getElementById('amount-input').value;
             const method = document.getElementById('method-input').value;
-            
-            document.getElementById('summary-amount').textContent = 
-                new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-                    .format(amount);
-            
+
+            document.getElementById('summary-amount').textContent =
+                new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                })
+                .format(amount);
+
             const methodNames = {
                 'momo': 'MoMo',
                 'bank': 'Chuyển khoản',
@@ -234,4 +273,5 @@
         </div>
     </footer>
 </body>
+
 </html>

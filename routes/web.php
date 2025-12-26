@@ -3,6 +3,7 @@
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\DocumentController;
 use App\Http\Controllers\User\UploadController;
+use App\Http\Controllers\User\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
@@ -22,3 +23,7 @@ Route::post('/documents/upload', [UploadController::class, 'store'])->name('docu
 Route::get('/documents/detail/{id}', [DocumentController::class, 'show'])->name('documents.show');
 
 Route::get('/documents/category/{category}', [DocumentController::class, 'showByCategory'])->name('documents.category');
+// MVC auth (session)
+Route::post('/register', [AuthController::class, 'register'])->name('web.register');
+Route::post('/login', [AuthController::class, 'login'])->name('web.login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('web.logout');
